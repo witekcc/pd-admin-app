@@ -1,0 +1,34 @@
+<template>
+<require from="LeadGen/mapList" as="maplist"></require>
+
+<div class="col-md-10">
+	<div class="row">
+		<div class="col-md-10">
+			 <div class="form-group">
+                 <label for="url">Dynamic URL or Filename</label>
+	             <input type="text" value.bind="configuration.DynamicPart" class="form-control" id="url" placeholder="Enter a template for the URL or filename" />                 
+              </div>
+		</div>
+		<div class="col-md-2">
+			 <div class="form-group">
+                 <label for="limit">Record Limit</label>
+	             <input type="number" value.bind="configuration.Limit" class="form-control" id="limit" />                 
+              </div>
+		</div>
+	</div>
+	
+	<div class="form-group">
+	     <label for="outputTemplate">Template</label>
+	     <textarea rows="3" value.bind="configuration.Template" class="form-control" style="white-space: nowrap;" id="outputTemplate" placeholder="Enter your template..." ></textarea>
+  	</div>
+  	<button click.delegate="testTemplate()" class="btn btn-default btn-sm">Test Template</button><button class="btn btn-default btn-sm">Headers</button>
+  	<div class="form-group">
+     	<textarea rows="5" id="results" value.bind="testResults" readonly style="white-space: nowrap;"  class="form-control"></textarea>
+  	</div>
+                  
+</div>
+
+<div class="col-md-2">
+<maplist title="Map" Items.bind="configuration.ReplacementMap" update-function.call="configuration.AddUpdateReplacementEntry($event)" delete-function.call="configuration.DeleteReplacementEntry($event)" new-function.call="configuration.NewReplacementEntry()"></maplist>
+</div>
+</template>

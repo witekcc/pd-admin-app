@@ -1,0 +1,24 @@
+<template>
+<form role="form">
+            <div class="row">
+               <div class="col-md-8">
+                  <div class="form-group">
+                     <label for="name">Name</label>
+                     <div class="input-group">
+                        <input type="text" value.bind="configuration.Name" class="form-control" id="name" placeholder="Name this configuration" />
+                        <div class="input-group-addon">Id: ${configuration.Id}</div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="notes">Notes</label>
+                     <textarea rows="3"  value.bind="configuration.Notes" class="form-control" id="notes" placeholder="Any notes for this configuration" ></textarea>
+                  </div>
+                  
+               </div>
+              
+                  
+               
+            </div>
+
+         </form>
+</template>

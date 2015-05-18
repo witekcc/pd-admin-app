@@ -1,0 +1,45 @@
+<template>
+<require from="LeadGen/mapList" as="maplist"></require>
+<form role="form">
+            <div class="col-md-8">
+            <div class="row">
+               <div class="col-md-3">
+                   <div class="form-group">
+                          <label for="action">Action Type</label>
+                         <select value.bind="configuration.ActionType" class="form-control" id="action">
+                           <option repeat.for="action of availableTypes.ActionTypes" model.bind="action.Id">${action.Name}</option>
+                         </select>  
+                         <p class="help-block">${configuration.ActionType.Description}</p>              
+                       </div>
+               </div>
+               <div class="col-md-9">
+                  <div class="form-group">
+                     <label for="url">URL</label>
+                     <input type="text" value.bind="configuration.Url" class="form-control" id="url" placeholder="Where the file will be sent" />
+                  </div>
+            </div>
+            </div>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="username">User Name</label>
+                           <input type="text" value.bind="configuration.UserName" class="form-control" id="username" placeholder="Username" />
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="password">Password</label>
+                           <input type="text" value.bind="configuration.Password" class="form-control" id="password" placeholder="Password" />
+                        </div>
+                     </div>
+                  </div>
+                  
+              </div>
+               <div class="col-md-4">
+                   <div class="form-group">
+                       <maplist title="Headers" Items.bind="configuration.CustomHeaders" update-function.call="configuration.AddUpdateHeader($event)" delete-function.call="configuration.DeleteHeader($event)" new-function.call="configuration.NewHeader()"></maplist>
+                    </div>      
+               </div>
+            
+         </form>
+</template>

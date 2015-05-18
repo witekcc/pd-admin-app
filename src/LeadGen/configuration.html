@@ -1,0 +1,22 @@
+<template>
+   <require from="LeadGen/configurationslist" as="configlist"></require>
+   <require from="LeadGen/mapList" as="maplist"></require>
+   <require from="LeadGen/campaignsList" as="campaignslist"></require>
+   <require from="LeadGen/configurationEditor" as="configeditor"></require>
+   <div class="col-md-2">
+     <campaignslist ref.view-model="clist"></campaignslist>
+   </div>
+   <div  class="col-md-10" >
+    <template if.bind="clist.campaignSelected">
+         <div class="form-group" >
+            <h2>${clist.campaignName}</h2>
+            <configlist ref="configlist" selected-campaign.two-way="clist.selectedCampaign" selected-configuration.two-way="selectedConfiguration"></configlist>
+         </div>
+         <div class="form-group" >
+
+         <configeditor selected-config.two-way="selectedConfiguration"></configeditor>
+         </div>
+     
+      </template>
+   </div>
+</template>

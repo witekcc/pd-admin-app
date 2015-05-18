@@ -1,0 +1,19 @@
+<template>
+   <h2>Campaigns</h2>
+  <div class="input-group">
+   <input type="text" class="form-control" value.bind="campaignFilter" placeholder="Filter" />
+   <span class="input-group-btn">
+      <button class="btn btn-default" type="button" click.trigger="clearFilter()"><span class="glyphicon glyphicon-remove-circle"></span></button>
+    </span>
+   </div>
+
+  <div class="list-group" role="menu"  style="max-height: 600px; overflow-y: scroll;border-top-style:solid; border-top-width:1px; border-top-color:#ccc; border-radius:4px ">
+
+     <a href="#/configuration/${campaign.Id}" role="button" click.delegate="$parent.selectCampaign(campaign)" 
+        class="list-group-item small ${$parent.selectedCampaign === campaign? 'active' : ''}"  
+        repeat.for="campaign of campaigns" >
+     ${campaign.CampaignName}<span class="badge small"><!--${$parent.numberOfConfigurations(campaign.Id)} --></span>
+     </a>
+  </div>
+</template>
+
