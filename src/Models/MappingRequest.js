@@ -4,7 +4,7 @@ export class MappingRequest {
 	
 	constructor(){
 		this.Templates = [];
-		this.ReplacementMap = new Map();
+		this.ReplacementMap = null;
 		this.Limit = 0;;
 	}
 
@@ -13,11 +13,12 @@ export class MappingRequest {
 		this.Templates.push(template);
 	}
 
-	setReplacementMap(array){
-		this.ReplacementMap.clear()
-		for (entry in array){
-			this.ReplacementMap.set(entry.Key, entry.Value);
-		}
+	setReplacementMap(replacements){
+
+		if(replacements.length > 0)
+		{
+			this.ReplacementMap = replacements;
+		}	
 	}
 }
 		

@@ -13,15 +13,6 @@ export class Configuration {
 
   }
 
-  
  
-  setTestResults(results){
-  	this.testResults = results;
-  }
-
-  save(){
-    LeadTransferConfiguration.saveConfig(this.http, this.selectedConfiguration);
-  }
-
 
 }

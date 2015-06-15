@@ -1,5 +1,6 @@
 import {HttpClient} from 'aurelia-http-client';
 import {inject} from 'aurelia-framework';
+import {IdKeyValueCollection} from 'Models/IdKeyValueCollection'
  
  @inject(HttpClient)
 export class LeadTransferConfiguration {
@@ -8,21 +9,17 @@ export class LeadTransferConfiguration {
 		let url = "http://localhost:9002/campaign/" + campaignId;
  
 		http.get(url).then(function (httpResponse){
-			let items = JSON.parse(httpResponse.response)
+			let items = JSON.parse(httpResponse.response);
 
-			campaignArray = [];
-
-			let counter = 0;
-			for(item in items) {
-				campaignArray[counter] = new LeadTransferConfiguration(http, item);
-				console.log(campaignArray[counter] );
+			for(let item in items) {				
+				campaignArray.push(new LeadTransferConfiguration(http, items[item]));
 			 }
 		})
 	}
 
 	static getAllConfigs(http, campaignMap){
 		let url = "http://localhost:9002/";
- 
+ 		
 		http.get(url).then(function (httpResponse){
 			campaignMap.clear();
 
@@ -31,28 +28,15 @@ export class LeadTransferConfiguration {
 			for(let campaign in campaigns){
 
 				if(!campaignMap.has(campaigns[campaign].CampaignId)) {
-					campaignMap.set(campaigns[campaign].CampaignId, Array.from(campaigns.filter( c => c.CampaignId == campaigns[campaign].CampaignId), x => new LeadTransferConfiguration(http, x)));
+					campaignMap.set(campaigns[campaign].CampaignId, 
+						Array.from(campaigns
+							.filter( c => c.CampaignId == campaigns[campaign].CampaignId), 
+							x => new LeadTransferConfiguration(http, x)));
 				 }
 			}
 
-			//console.log(campaignMap);
 		})
 	}
-/*
-	static saveConfig(http, transferConfig) {
-		console.log('Saving ' + transferConfig.Id);
-		let url = "http://localhost:9002/" + transferConfig.Id;
-		http.createRequest(url)
-		.asPost()
-		.withHeader("Content-Type", "application/json;charset=UTF-8")
-		.withContent(JSON.stringify(transferConfig))
-		.send().then(function (httpResponse){
-		
-			transferConfig.Id = parseInt(httpResponse.response);
-		});
- 
-	}
-*/
 
 	constructor(http, obj){
 		this.http = http;
@@ -67,99 +51,33 @@ export class LeadTransferConfiguration {
 		this.UserName = "";
 		this.Password = "";
 		this.Id = 0;
-		this.ActionType = 0;
+		this.ActionType = 1;
+		this.SuccessCode = 200;
+		this.SuccessString = "";
+		
+
 		this.CustomHeaders = [];
 		this.ReplacementMap = [];
+		this.Certificates = [];
+		
 		this.isSaving = false;
 				
 		for (var prop in obj) this[prop] = obj[prop];
 		
+		this.CertificatesCollection = new IdKeyValueCollection(http, this.Certificates, "/certificates", this);
+		this.CustomHeadersCollection = new IdKeyValueCollection(http, this.CustomHeaders, "/headers", this);
+		this.ReplacementMapCollection = new IdKeyValueCollection(http, this.ReplacementMap, "/valueMap", this);
+		console.log(this);
 	}
 
-	NewHeader(){
-		let item = {Id : 0, Key : "", Value : ""};
-		this.CustomHeaders.push(item);
-		return item;
-	}
-
-	NewReplacementEntry(){
-		let item = {Id : 0, Key : "", Value : ""};
-		this.ReplacementMap.push(item);
-		return item;
-	}
-
-	AddUpdateHeader(header){
-		
-		let url = "http://localhost:9002/" + this.Id + "/headers";
-		
-		this.http.createRequest(url)
-		.asPost()
-		.withHeader("Content-Type", "application/json;charset=UTF-8")
-		.withContent(JSON.stringify(header))
-		.send().then(function (httpResponse){
-		
-		header.Id = parseInt(httpResponse.response);
-
-		});
-	}
-
-	AddUpdateReplacementEntry(entry){
-		
-		let url = "http://localhost:9002/" + this.Id + "/valueMap";
-		
-		this.http.createRequest(url)
-		.asPost()
-		.withHeader("Content-Type", "application/json;charset=UTF-8")
-		.withContent(JSON.stringify(entry))
-		.send().then(function (httpResponse){
-		
-		entry.Id = parseInt(httpResponse.response);
-
-		});
-	}
-
-	DeleteHeader(header){
-		
-		let url = "http://localhost:9002/" + this.Id + "/headers";
-		
-		this.http.createRequest(url)
-		.asDelete()
-		.withHeader("Content-Type", "application/json;charset=UTF-8")
-		.withContent(JSON.stringify(header))
-		.send();
-
-		let index = this.CustomHeaders.indexOf(entry);
-		if (index > -1) {
-		    this.CustomHeaders.splice(index, 1);
-		}
-
-	}
-
-	DeleteReplacementEntry(entry){
-		
-		let url = "http://localhost:9002/" + this.Id + "/valueMap";
-		
-		this.http.createRequest(url)
-		.asDelete()
-		.withHeader("Content-Type", "application/json;charset=UTF-8")
-		.withContent(JSON.stringify(entry))
-		.send();
-
-		let index = this.ReplacementMap.indexOf(entry);
-		if (index > -1) {
-		    this.ReplacementMap.splice(index, 1);
-		}
-
-	}
-
-	Save(){
+	Save(http){
 
 		console.log('Saving ' + this.Id);
 		let url = "http://localhost:9002/" + this.Id;
 		let that = this;
 		this.isSaving = true;
-
-		this.http.createRequest(url)
+		
+		http.createRequest(url)
 		.asPost()
 		.withHeader("Content-Type", "application/json;charset=UTF-8")
 		.withContent(JSON.stringify(this))
@@ -172,14 +90,14 @@ export class LeadTransferConfiguration {
  
 	}
 
-	Delete(){
+	Delete(http){
 
 		console.log('Deleting ' + this.Id);
 		let url = "http://localhost:9002/" + this.Id;
 		let that = this;
 		this.isSaving = true;
 
-		this.http.createRequest(url)
+		http.createRequest(url)
 		.asDelete()
 		.withHeader("Content-Type", "application/json;charset=UTF-8")
 		.withContent(JSON.stringify(this))

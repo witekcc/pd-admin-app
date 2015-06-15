@@ -1,6 +1,6 @@
 <template>
 
-
+    <div class="form-group">
    <form class="form-inline">
 
 
@@ -19,19 +19,20 @@
       </div>
 
    </form>
-
+</div>
     <template  if.bind="selectedConfiguration == null">
     <h4>Ready to go? Great! Click here <span class="glyphicon glyphicon-hand-up"></span> to get started!</h4>
     </template>
-       <!-- <div class="list-group" role="menu"  style="max-height: 100px; overflow-y: scroll;border-top-style:solid; border-top-width:1px; border-top-color:#ccc; border-radius:4px ">
-                  
-                  <a href="#" click.delegate="$parent.selectConfig(config)" role="button" class="list-group-item ${$parent.selectedConfiguration === config ? 'active' : ''}" repeat.for="config of selectedConfigurationList">
-                  <span class="list-group-item-text">${config.Name}</span>
-
-                     <button click.delegate="deleteConfiguration()" class ="btn btn-default btn-sm pull-right">
-                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Remove
-                     </button>
-                  </a>
-               </div> -->
+    <template if.bind="selectedConfiguration != null">
+      <div class="row">
+    <div class="col-md-6 form-group">
+      <div class="btn-group" role="group">
+            <button type="button" class="btn btn-success" disabled="${canSave ? '' : 'disabled' }" click.delegate="save()" id="save"><span class="glyphicon glyphicon-ok-circle"></span> Save</button>
+            <button type="button" class="btn btn-danger" disabled="${canDelete ? '' : 'disabled' }" click.delegate="delete()"><span class="glyphicon glyphicon-remove-circle"></span> Delete</button>
+          </div>
+    </div>
+  </div>
+    </template>
+      
             
 </template>

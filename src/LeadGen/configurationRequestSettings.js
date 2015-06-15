@@ -10,8 +10,9 @@ export class ConfigurationRequestSettings {
 constructor(availableTypes){
   
   this.availableTypes = availableTypes;
-	this.configuration = null;
+
 }
+
 
 
 }

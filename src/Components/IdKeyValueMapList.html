@@ -1,40 +1,44 @@
-<template>
+<template >
 
 <label >${title}</label>
 
 <form class="form-inline">
-<div class="form-group">
+<div class="form-group form-group-sm">
 <div class="btn-toolbar" role="toolbar">
+<template if.bind="filterenabled">
   	<div class="btn-group" role="group">
-  	  <div if.bind="FilterEnabled" class="input-group">
-  	     <input  type="text" class="form-control" click.delegate="selectItem(null)" value.bind="filterString" placeholder="Filter" />
+    
+  	  <div class="input-group input-group-sm">
+  	     <input  type="text" class="form-control " click.delegate="selectItem(null)" value.bind="Filter" placeholder="Filter" />
   	        <span class="input-group-btn">
-  	        <button class="btn btn-default" type="button" click.trigger="clearFilter()"><span class="glyphicon glyphicon-remove-circle"></span></button>
+  	        <button class="btn btn-default" type="button" click.delegate="clearFilter()"><span class="glyphicon glyphicon-remove-circle"></span></button>
   	      	</span>
   	  </div>
+      
     </div>
-    <div class="btn-group" role="group">
-   <button class="btn btn-success" type="button" click.delegate="new()"><span class="glyphicon glyphicon-plus-sign"></span> New</button>
+    </template>
+    <div class="btn-group btn-group-sm" role="group">
+   <button class="btn btn-success btn-sm" type="button" click.delegate="new()"><span class="glyphicon glyphicon-plus-sign"></span> New</button>
    </div>
    </div>
    </div>
   </form>
    <div class="list-group" role="menu"  style="max-height: 600px; overflow-y: scroll;border-top-style:solid; border-top-width:1px; border-top-color:#ccc; border-radius:4px ">
-   		<template  repeat.for="item of items">
+   		<template repeat.for="item of filteredItems">
 
          <a if.bind="$parent.selectedItem !== item" role="button" click.delegate="$parent.selectItem(item)" 
             class="list-group-item small">
 			${item.Key} : ${item.Value} </a>
-        <a if.bind="$parent.selectedItem === item" role="button" class="list-group-item small active">
+        <a if.bind="$parent.selectedItem === item" role="button" class="list-group-item small active" click.delegate="$parent.selectItem(null)">
         <div class="form-inline">
     			<div class="form-group">
             
-          	<input type="text" value.bind="item.Key" class="form-control input-sm" id="username" placeholder="Key" /> 
+          	<input type="text" value.bind="item.Key" class="form-control input-sm"  placeholder="Key" click.delegate="$parent.stopTheBubble($event)" /> 
             
           </div>
     		  <div class="form-group">
            
-    		    <input type="text" value.bind="item.Value" class="form-control input-sm" id="password" placeholder="Value" />
+    		    <input type="text" value.bind="item.Value" class="form-control input-sm" placeholder="Value" click.delegate="$parent.stopTheBubble($event)" />
             
     		  </div>
     		  

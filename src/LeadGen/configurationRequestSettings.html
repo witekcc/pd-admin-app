@@ -1,5 +1,6 @@
 <template>
-<require from="LeadGen/mapList" as="maplist"></require>
+
+<require from="Components/IdKeyValueMapList" as="maplist"></require>
 <form role="form">
             <div class="col-md-8">
             <div class="row">
@@ -16,29 +17,54 @@
                   <div class="form-group">
                      <label for="url">URL</label>
                      <input type="text" value.bind="configuration.Url" class="form-control" id="url" placeholder="Where the file will be sent" />
+                     <p class="help-block">URL for HTTP or FTP actions, email addresses for EMAIL action seperated by commas.</p>
                   </div>
             </div>
             </div>
-                  <div class="row">
-                     <div class="col-md-6">
-                        <div class="form-group">
-                           <label for="username">User Name</label>
-                           <input type="text" value.bind="configuration.UserName" class="form-control" id="username" placeholder="Username" />
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div class="form-group">
-                           <label for="password">Password</label>
-                           <input type="text" value.bind="configuration.Password" class="form-control" id="password" placeholder="Password" />
-                        </div>
-                     </div>
-                  </div>
+                 <div class="row">
+                 <div class="col-md-6">
+                    <div class="form-group">
+                       <label for="username">User Name</label>
+                       <input type="text" value.bind="configuration.UserName" class="form-control" id="username" placeholder="Username" />
+                       <p class="help-block">Leave blank if not required.</p>
+                    </div>
+                 </div>
+                 <div class="col-md-6">
+                    <div class="form-group">
+                       <label for="password">Password</label>
+                       <input type="text" value.bind="configuration.Password" class="form-control" id="password" placeholder="Password" />
+                    </div>
+                 </div>
+              </div>
+              <div class="row">
+                 <div class="col-md-4">
+                    <div class="form-group">
+                       <label for="successcode">Success Code</label>
+                       <input type="number" value.bind="configuration.SuccessCode" class="form-control" id="successcode" placeholder="Success Code" />
+                        <p class="help-block">Will only be used for HTTP actions.</p>
+                    </div>
+                 </div>
+                 <div class="col-md-8">
+                    <div class="form-group">
+                       <label for="successstring">Success String</label>
+                       <input type="text" value.bind="configuration.SuccessString" class="form-control" id="successstring" placeholder="Success String" />
+                        <p class="help-block">Leave blank to use Success Code to determine transfer success.</p>
+                    </div>
+                 </div>
+              </div>
                   
               </div>
-               <div class="col-md-4">
-                   <div class="form-group">
-                       <maplist title="Headers" Items.bind="configuration.CustomHeaders" update-function.call="configuration.AddUpdateHeader($event)" delete-function.call="configuration.DeleteHeader($event)" new-function.call="configuration.NewHeader()"></maplist>
+               <div if.bind="configuration != null"  class="col-md-4">
+                  <div class="row">
+                    <div class="form-group">
+                      <maplist title="Headers" filterenabled.bind="true" source-items.bind="configuration.CustomHeadersCollection" ></maplist>
                     </div>      
+                    </div>
+                    <div class="row">
+                     <div class="form-group">
+                      <maplist title="Certificates" filterenabled.bind="false" source-items.bind="configuration.CertificatesCollection"></maplist>
+                    </div>     
+                    </div>
                </div>
             
          </form>

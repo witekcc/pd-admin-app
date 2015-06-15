@@ -22,21 +22,36 @@ constructor(http){
     	this.configurationMap = new Map();
     	this.selectedConfigurationList = null;
     	this.selectedCampaign= null;
-		LeadTransferConfiguration.getAllConfigs(http, this.configurationMap);
+      this.http = http;
+
+		//LeadTransferConfiguration.getAllConfigs(http, this.configurationMap);
 } 
 
 selectedCampaignChanged(newValue, oldValue){
-	  this.selectedCampaign= newValue;
-      if(this.configurationMap.has(newValue.Id)) {
+	  
+    this.selectedCampaign= newValue;
+      
+    if(this.configurationMap.has(newValue.Id)) {
       this.selectedConfigurationList = this.configurationMap.get(newValue.Id);
-
-      if(this.selectedConfigurationList.length > 0){
-        this.selectedConfiguration = this.selectedConfigurationList[0]; 
-      }
-    } else {
-      this.selectedConfigurationList = null;
-      this.selectedConfiguration = null;
+      
+    } 
+    else {
+      this.selectedConfigurationList = this.loadConfigs(newValue.Id);
     }
+
+    if(this.selectedConfigurationList.length > 0){
+        this.selectedConfiguration = this.selectedConfigurationList[0]; 
+    }
+
+}
+
+loadConfigs(campaignId){
+  let configs = [];
+  this.configurationMap.set(campaignId, configs);
+
+  LeadTransferConfiguration.getConfigsForCampaign(this.http, campaignId, configs);
+
+  return configs;
 }
 
 selectConfig(config){
@@ -58,7 +73,7 @@ numberOfConfigurations(campaignId){
    
 newConfiguration(){
     
-    let config = new LeadTransferConfiguration(null);
+    let config = new LeadTransferConfiguration(this.http, null);
     config.CampaignId = this.selectedCampaign.Id;    
 
     if(!this.configurationMap.has(config.CampaignId)) {
@@ -69,6 +84,35 @@ newConfiguration(){
     this.selectedConfigurationList.push(config);
     this.selectedConfiguration = config;
 }
+
+  get canSave(){
+    return this.selectedConfiguration != null && !this.selectedConfiguration.isSaving;
+  }
+
+  get canDelete(){
+    return this.selectedConfiguration != null && this.selectedConfiguration.Id > 0 && !this.selectedConfiguration.isSaving;
+  }
+
+
+  save(){
+    this.selectedConfiguration.Save(this.http);
+  }
+
+  delete(){
+    this.selectedConfiguration.Delete(this.http);
+    let index = this.selectedConfigurationList.indexOf(this.selectedConfiguration);
+    this.selectedConfigurationList.splice(index, 1);
+    
+    if(index > 0)
+    {
+      this.selectedConfiguration = this.selectedConfigurationList[index -1];
+    }
+    else
+    {
+      this.selectedConfiguration = null;
+    }
+
+  }
 
 
 

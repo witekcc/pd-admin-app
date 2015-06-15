@@ -1,41 +1,32 @@
 <template>
- <require from="LeadGen/configurationGeneralSettings" as="settings"></require>
- <require from="LeadGen/configurationDataSettings" as="dataconfig"></require>
+  <require from="LeadGen/configurationGeneralSettings" as="settings"></require>
+  <require from="LeadGen/configurationDataSettings" as="dataconfig"></require>
   <require from="LeadGen/configurationRequestSettings" as="requestconfig"></require>
 
-
   <template  if.bind="configuration != null">
+  
   <div class="row">
-    <div class="col-md-6 form-group">
-      <div class="btn-group" role="group">
-            <button type="button" class="btn btn-success" disabled="${canSave ? '' : 'disabled' }" click.delegate="save()" id="save"><span class="glyphicon glyphicon-ok-circle"></span> Save</button>
-            <button type="button" class="btn btn-danger" disabled="${canDelete ? '' : 'disabled' }" click.delegate="delete()"><span class="glyphicon glyphicon-remove-circle"></span> Delete</button>
+    <div class="col-md-12">
+      <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+          <li class="active"><a href="#General" data-toggle="tab">General</a></li>
+          <li><a href="#Requesttab" data-toggle="tab">Transfer Settings</a></li>
+          <li><a href="#Data" data-toggle="tab">Template</a></li>
+      </ul>
+     
+      <div class="tab-content">
+          <div class="tab-pane active" id="General">
+            <settings selected-config.two-way="configuration"></settings>
           </div>
+          <div class="tab-pane" id="Requesttab">
+            <requestconfig selected-config.two-way="configuration"></requestconfig>
+          </div>        
+          <div class="tab-pane" id="Data">
+            <dataconfig selected-config.two-way="configuration"></dataconfig>
+          </div>
+      </div>
     </div>
   </div>
-  <div class="row">
-  <div class="col-md-12">
-    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-        <li class="active"><a href="#General" data-toggle="tab">General</a></li>
-        <li><a href="#Requesttab" data-toggle="tab">Transfer Settings</a></li>
-        <li><a href="#Data" data-toggle="tab">Template</a></li>
-    </ul>
-   
-    <div class="tab-content">
-        <div class="tab-pane active" id="General">
-           <settings selected-config.bind="configuration"></settings>
-        </div>
-        <div class="tab-pane" id="Requesttab">
-          <requestconfig selected-config.bind="configuration"></requestconfig>
-        </div>        
-        <div class="tab-pane" id="Data">
-            <dataconfig selected-config.bind="configuration"></dataconfig>
-        </div>
-    </div>
-</div>
-</div>
 
-</template>
-   
+  </template>   
 
 </template>
