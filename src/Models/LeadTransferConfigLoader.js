@@ -1,6 +1,7 @@
 import {HttpClient} from 'aurelia-http-client';
 import {inject} from 'aurelia-framework';
 import {LeadTransferConfiguration} from 'Models/LeadTransferConfiguration'
+import {Services} from 'services';
  
  @inject(HttpClient)
 export class LeadTransferConfigLoader {
@@ -12,7 +13,7 @@ export class LeadTransferConfigLoader {
 	}
 
 	GetConfigsForCampaign(campaignId, campaignArray){
-		let url = "http://localhost:9002/campaign/" + campaignId;
+		let url = Services.LeadConfig() + "campaign/" + campaignId;
  		let that = this;
  		this.incrementLoading();
 		this.http.get(url).then(function (httpResponse){
@@ -41,7 +42,7 @@ export class LeadTransferConfigLoader {
 	}
 
 	GetAllConfigs(campaignMap){
-		let url = "http://localhost:9002/";
+		let url = Services.LeadConfig();
  		let that = this;
  		this.incrementLoading();
 

@@ -3,6 +3,7 @@ import {LeadTransferConfiguration} from 'Models/LeadTransferConfiguration';
 import {MappingRequest} from 'Models/MappingRequest';
 import {HttpClient} from 'aurelia-http-client';
 import {AvailableTypes} from 'Models/AvailableTypes';
+import {Services} from 'services';
 
 @inject(HttpClient, AvailableTypes)
 @customElement("configuration-data-settings")
@@ -28,7 +29,7 @@ testTemplates() {
     request.setReplacementMap(this.configuration.ReplacementMap);
     request.Limit = this.configuration.LeadCountLimit;
     
-    let url = "http://localhost:9001/generate/0";
+    let url = Services.LeadGen() + "generate/0";
     let that = this;
 
     this.http.createRequest(url)
@@ -49,7 +50,7 @@ testTemplates() {
   
   sendTest() {
   
-    let url = "http://localhost:9007/test/" + this.configuration.Id;
+    let url = Services.LeadSend() + "test/" + this.configuration.Id;
     
     this.http.post(url);
     let id = this.configuration.ActionType;

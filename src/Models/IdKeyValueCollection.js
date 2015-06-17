@@ -1,6 +1,8 @@
 
 import {HttpClient} from 'aurelia-http-client';
 import {inject} from 'aurelia-framework';
+import {Services} from 'services';
+
  
 export class IdKeyValueCollection {
 
@@ -36,7 +38,7 @@ export class IdKeyValueCollection {
 		if(this.selectedItem == null)
 			return;
 
-		let url = "http://localhost:9002/" + this.parent.Id + this.urlPart;
+		let url = Services.LeadConfig() + this.parent.Id + this.urlPart;
 		let item = this.selectedItem;
 
 		this.http.createRequest(url)
@@ -54,7 +56,7 @@ export class IdKeyValueCollection {
 		if(this.selectedItem == null)
 			return;
 
-		let url = "http://localhost:9002/" + this.parent.Id + this.urlPart;
+		let url = Services.LeadConfig() + this.parent.Id + this.urlPart;
 		let item = this.selectedItem;
 		
 		this.selectedItem = null;

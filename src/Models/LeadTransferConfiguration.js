@@ -1,6 +1,7 @@
 import {HttpClient} from 'aurelia-http-client';
 import {inject} from 'aurelia-framework';
 import {IdKeyValueCollection} from 'Models/IdKeyValueCollection'
+import {Services} from 'services';
  
  @inject(HttpClient)
 export class LeadTransferConfiguration {
@@ -47,7 +48,7 @@ export class LeadTransferConfiguration {
 	Save(http){
 
 		console.log('Saving ' + this.Id);
-		let url = "http://localhost:9002/" + this.Id;
+		let url = Services.LeadConfig() + this.Id;
 		let that = this;
 		this.isSaving = true;
 		
@@ -67,7 +68,7 @@ export class LeadTransferConfiguration {
 	Delete(http){
 
 		console.log('Deleting ' + this.Id);
-		let url = "http://localhost:9002/" + this.Id;
+		let url = Services.LeadConfig() + this.Id;
 		let that = this;
 		this.isSaving = true;
 

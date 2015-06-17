@@ -1,6 +1,7 @@
 import {HttpClient} from 'aurelia-http-client';
 import {inject} from 'aurelia-framework';
 import {computedFrom} from 'aurelia-framework';
+import {Services} from 'services';
 
 @inject(HttpClient)
 export class CampaignCollection {
@@ -16,7 +17,7 @@ export class CampaignCollection {
 	}
 
 	loadCampaigns(http){
-		let url = "http://localhost:9004/";
+		let url = Services.CampaignResolver();
 		let that = this;
 	
 		http.get(url).then(function (httpResponse){
