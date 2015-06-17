@@ -10,7 +10,7 @@
                          <select value.bind="configuration.ActionType" class="form-control" id="action">
                            <option repeat.for="action of availableTypes.ActionTypes" model.bind="action.Id">${action.Name}</option>
                          </select>  
-                         <p class="help-block">${configuration.ActionType.Description}</p>              
+                         <p class="help-block">${action.Description}</p>              
                        </div>
                </div>
                <div class="col-md-9">
@@ -54,15 +54,15 @@
               </div>
                   
               </div>
-               <div if.bind="configuration != null"  class="col-md-4">
+               <div class="col-md-4">
                   <div class="row">
                     <div class="form-group">
-                      <maplist title="Headers" filterenabled.bind="true" source-items.bind="configuration.CustomHeadersCollection" ></maplist>
+                      <maplist title="Headers" filterenabled.bind="true" source-items.bind="CustomHeadersCollection" ></maplist>
                     </div>      
                     </div>
                     <div class="row">
                      <div class="form-group">
-                      <maplist title="Certificates" filterenabled.bind="false" source-items.bind="configuration.CertificatesCollection"></maplist>
+                      <maplist title="Certificates" filterenabled.bind="false" source-items.bind="CertificatesCollection"></maplist>
                     </div>     
                     </div>
                </div>

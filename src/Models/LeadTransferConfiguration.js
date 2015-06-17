@@ -4,39 +4,6 @@ import {IdKeyValueCollection} from 'Models/IdKeyValueCollection'
  
  @inject(HttpClient)
 export class LeadTransferConfiguration {
-	
-	static getConfigsForCampaign(http, campaignId, campaignArray){
-		let url = "http://localhost:9002/campaign/" + campaignId;
- 
-		http.get(url).then(function (httpResponse){
-			let items = JSON.parse(httpResponse.response);
-
-			for(let item in items) {				
-				campaignArray.push(new LeadTransferConfiguration(http, items[item]));
-			 }
-		})
-	}
-
-	static getAllConfigs(http, campaignMap){
-		let url = "http://localhost:9002/";
- 		
-		http.get(url).then(function (httpResponse){
-			campaignMap.clear();
-
-			let campaigns = JSON.parse(httpResponse.response);
-
-			for(let campaign in campaigns){
-
-				if(!campaignMap.has(campaigns[campaign].CampaignId)) {
-					campaignMap.set(campaigns[campaign].CampaignId, 
-						Array.from(campaigns
-							.filter( c => c.CampaignId == campaigns[campaign].CampaignId), 
-							x => new LeadTransferConfiguration(http, x)));
-				 }
-			}
-
-		})
-	}
 
 	constructor(http, obj){
 		this.http = http;
@@ -67,7 +34,14 @@ export class LeadTransferConfiguration {
 		this.CertificatesCollection = new IdKeyValueCollection(http, this.Certificates, "/certificates", this);
 		this.CustomHeadersCollection = new IdKeyValueCollection(http, this.CustomHeaders, "/headers", this);
 		this.ReplacementMapCollection = new IdKeyValueCollection(http, this.ReplacementMap, "/valueMap", this);
-		console.log(this);
+		
+	}
+
+	replacer(key, value) {
+	  if (value.constructor.name === "IdKeyValueCollection") {
+	    return undefined;
+	  }
+	  return value;
 	}
 
 	Save(http){
@@ -80,7 +54,7 @@ export class LeadTransferConfiguration {
 		http.createRequest(url)
 		.asPost()
 		.withHeader("Content-Type", "application/json;charset=UTF-8")
-		.withContent(JSON.stringify(this))
+		.withContent(JSON.stringify(this, this.replacer))
 		.send().then(function (httpResponse){
 		
 			that.Id = parseInt(httpResponse.response);
@@ -100,7 +74,7 @@ export class LeadTransferConfiguration {
 		http.createRequest(url)
 		.asDelete()
 		.withHeader("Content-Type", "application/json;charset=UTF-8")
-		.withContent(JSON.stringify(this))
+		.withContent(JSON.stringify(this, this.replacer))
 		.send().then(function (httpResponse){
 		
 			that.Id = parseInt(httpResponse.response);

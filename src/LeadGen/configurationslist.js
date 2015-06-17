@@ -1,6 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {bindable, customElement, bindingMode } from 'aurelia-framework';
 import {LeadTransferConfiguration} from 'Models/LeadTransferConfiguration';
+import {LeadTransferConfigLoader} from 'Models/LeadTransferConfigLoader';
 import {HttpClient} from 'aurelia-http-client';
 
 @bindable ({
@@ -14,23 +15,24 @@ import {HttpClient} from 'aurelia-http-client';
   attribute:'selected-configuration', //name of the attribute in HTML  
   defaultBindingMode: bindingMode.twoWay 
 })
-@inject(HttpClient)
+@inject(HttpClient, LeadTransferConfigLoader)
 export class ConfigurationsList{
 
-constructor(http){
+constructor(http, loader){
 	    this.selectedConfiguration = null;
     	this.configurationMap = new Map();
     	this.selectedConfigurationList = null;
     	this.selectedCampaign= null;
       this.http = http;
+      this.loader = loader;
 
 		//LeadTransferConfiguration.getAllConfigs(http, this.configurationMap);
 } 
 
 selectedCampaignChanged(newValue, oldValue){
 	  
-    this.selectedCampaign= newValue;
-      
+    //this.selectedCampaign= newValue;
+      //console.log(this.selectedCampaign);
     if(this.configurationMap.has(newValue.Id)) {
       this.selectedConfigurationList = this.configurationMap.get(newValue.Id);
       
@@ -41,15 +43,16 @@ selectedCampaignChanged(newValue, oldValue){
 
     if(this.selectedConfigurationList.length > 0){
         this.selectedConfiguration = this.selectedConfigurationList[0]; 
-    }
+    } 
 
+    //console.log(this.selectedConfiguration);
 }
 
 loadConfigs(campaignId){
   let configs = [];
   this.configurationMap.set(campaignId, configs);
 
-  LeadTransferConfiguration.getConfigsForCampaign(this.http, campaignId, configs);
+  this.loader.GetConfigsForCampaign(campaignId, configs);
 
   return configs;
 }
@@ -77,7 +80,7 @@ newConfiguration(){
     config.CampaignId = this.selectedCampaign.Id;    
 
     if(!this.configurationMap.has(config.CampaignId)) {
-      this.selectedConfigurationList = new Array();
+      this.selectedConfigurationList = [];
       this.configurationMap.set(config.CampaignId, this.selectedConfigurationList);
     }
 

@@ -9,13 +9,11 @@ export class ActionTypeToIntValueConverter {
 	}
 
   toView(number) {
-  	console.log(number);
     let item = this.Types.find(function(type){ return type.Id == number;});
     return item;
   }
 
   fromView(action) {
-  	console.log(action);
     return action.Id;    
   }
 }

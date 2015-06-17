@@ -3,14 +3,26 @@ import {HttpClient} from 'aurelia-http-client';
 import {LeadTransferConfiguration} from 'Models/LeadTransferConfiguration';
 
 @inject(HttpClient)
-@bindable ({  name:'configuration', attribute:'selected-config'})
+@bindable ({  name:'configuration', attribute:'selected-config', changeHandler:'configChanged'})
 export class ConfigurationEditor {
 
 	constructor(http){
 		this.http = http;
 		this.configuration = null;
+		this.IsValidConfig = false;
 		
 	}
+
+	configChanged(newVal, oldVal){
+
+		if(newVal != null && newVal.constructor.name === "LeadTransferConfiguration") {
+			this.IsValidConfig = true;
+			this.configuration = newVal;
+		}
+		else
+			this.IsValidConfig = false;
+	}
+
 
 	get canSave(){
 		return this.configuration != null && !this.configuration.isSaving;

@@ -10,6 +10,7 @@ export class IdKeyValueCollection {
 		this.urlPart = urlPart;
 		this.parent = parent;
 		this.selectedItem = null;
+		this.isEnumerable = false;
 
 	}
 
