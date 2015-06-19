@@ -1,6 +1,7 @@
 <template>
 <require from="Components/IdKeyValueMapList" as="maplist"></require>
 <require from="Converters/stringToInt" as="StringToInt"></require>
+<require from="Components/CmEditor" as="cmeditor"></require>
 
 <div class="col-md-10">
 	<div class="row">
@@ -18,28 +19,53 @@
               </div>
 		</div>
 	</div>
+
+	
 	
 	<div class="form-group">
-	     <label for="outputTemplate">Template</label><a href="https://permissiondata.atlassian.net/wiki/display/AA/Lead+Generation" target="_blank"><span class="glyphicon glyphicon-question-sign"></span></a>
-	     <textarea rows="3" value.bind="configuration.Template" class="form-control" style="white-space: nowrap;" id="outputTemplate" placeholder="Enter your template..." ></textarea>
+	     <label for="outputTemplate">Template </label><a href="https://permissiondata.atlassian.net/wiki/display/AA/Lead+Generation" target="_blank"><span class="glyphicon glyphicon-question-sign"></span></a>
+	     
+	     <div class="btn-group" role="group">
+			<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    Quick Starts <span class="caret"></span>
+		  	</button>
+			  <ul class="dropdown-menu">
+			 <li repeat.for="[name, value] of samples"><a click.delegate="$parent.useTemplate(value)">${name}</a></li> 
+			  </ul>
+  		</div>
+
+  		
+		<cmeditor cmeditor.ref="cmedit" value.bind="configuration.Template"></cmeditor>
+
   	</div>
 
+  	
+  	
   	<div class="btn-group" role="group">
   			<button click.trigger="testTemplates()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-education"></span> Test Template</button>
   			<button click.trigger="sendTest()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-send"></span> Send Test</button>           
          
     </div>
   	
+  	
   	<div class="form-group">
      	<textarea rows="5" id="results" value.bind="testResults" readonly style="white-space: nowrap;"  class="form-control"></textarea>
   	</div>
               
      <div class="form-group">
-     	<div repeat.for="alert of alerts" class="alert alert-success alert-dismissible" role="alert">
+     	<div repeat.for="a of alerts" class="alert alert-success alert-dismissible" role="alert">
 		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		  ${alert}
+		  ${a.message}<br/>
+		  <template if.bind="a.response == null">
+			<i class="fa fa-spinner fa-spin"></i>
+		  </template>
+		  <template if.bind="a.response != null">
+		  <textarea readonly style="white-space: nowrap;" class="form-control" value.bind="a.response" readonly></textarea>
+		  </template>
+		  
 		</div>
-     </div>    
+     </div>   
+
 </div>
 
 <div class="col-md-2">
@@ -48,4 +74,5 @@
 
 
 </div>
+
 </template>

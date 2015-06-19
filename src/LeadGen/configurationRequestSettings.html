@@ -1,6 +1,7 @@
 <template>
 
 <require from="Components/IdKeyValueMapList" as="maplist"></require>
+<require from="Converters/stringToInt" as="StringToIntValueConverter"></require>
 <form role="form">
             <div class="col-md-8">
             <div class="row">
@@ -40,7 +41,7 @@
                  <div class="col-md-4">
                     <div class="form-group">
                        <label for="successcode">Success Code</label>
-                       <input type="number" value.bind="configuration.SuccessCode" class="form-control" id="successcode" placeholder="Success Code" />
+                       <input type="number" value.bind="configuration.SuccessCode | StringToIntValueConverter" class="form-control" id="successcode" placeholder="Success Code" />
                         <p class="help-block">Will only be used for HTTP actions.</p>
                     </div>
                  </div>

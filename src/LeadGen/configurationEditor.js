@@ -10,6 +10,7 @@ export class ConfigurationEditor {
 		this.http = http;
 		this.configuration = null;
 		this.IsValidConfig = false;
+		this.clickCount = 0;
 		
 	}
 
@@ -23,6 +24,10 @@ export class ConfigurationEditor {
 			this.IsValidConfig = false;
 	}
 
+	tabClick(){
+		console.log("tabClick");
+		this.clickCount++;
+	}
 
 	get canSave(){
 		return this.configuration != null && !this.configuration.isSaving;

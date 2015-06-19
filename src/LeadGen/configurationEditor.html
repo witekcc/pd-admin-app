@@ -8,9 +8,9 @@
   <div class="row">
     <div class="col-md-12">
       <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-          <li class="active"><a href="#General" data-toggle="tab">General</a></li>
-          <li><a href="#Requesttab" data-toggle="tab">Transfer Settings</a></li>
-          <li><a href="#Data" data-toggle="tab">Template</a></li>
+          <li class="active"><a href="#General" role="tab" data-toggle="tab">General</a></li>
+          <li><a href="#Requesttab" role="tab" data-toggle="tab">Transfer Settings</a></li>
+          <li><a href="#Data" role="tab" data-toggle="tab" ref="datatab" click.delegate="tabClick()">Template</a></li>
       </ul>
      
       <div class="tab-content">
@@ -20,8 +20,8 @@
           <div class="tab-pane" id="Requesttab">
             <requestconfig selected-config.two-way="configuration"></requestconfig>
           </div>        
-          <div class="tab-pane" id="Data">
-            <dataconfig selected-config.two-way="configuration"></dataconfig>
+          <div class="tab-pane" id="Data" >
+            <dataconfig refresh-counter.two-way="clickCount" selected-config.two-way="configuration"></dataconfig>
           </div>
       </div>
     </div>

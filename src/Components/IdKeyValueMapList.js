@@ -1,5 +1,5 @@
 import {IdKeyValueCollection} from 'Models/IdKeyValueCollection';
-import {computedFrom, bindable, inject} from 'aurelia-framework';
+import {computedFrom, bindable} from 'aurelia-framework';
 
 @bindable ({ name:'title', attribute:'title'})
 @bindable ({ name:'collection', attribute:'source-items', changeHandler:'collectionChanged'})
