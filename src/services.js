@@ -18,4 +18,9 @@ export class Services{
 		return "http://localhost:9004/";
 	}
 
+	static CampaignBuckets(){
+		return "http://10.0.1.203:7000/buckets/?type=age";
+		//return "http://localhost:7000/buckets/1/";
+	}
+
 }
