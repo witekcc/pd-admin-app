@@ -1,0 +1,24 @@
+<template>
+
+  <form>
+    <div class="form-group">
+      <label>Name</label> 
+      <input type="text" class="form-control" value="Name"/>
+    </div>
+    <div class="form-group">
+      <label>Weights</label> 
+      <input type="text" class="form-control" value="Weights"/>
+    </div>
+    <div class="form-group">
+     <label>Values</label> 
+     <textarea rows="4" cols="50" class="form-control">I'm a little tea pot</textarea>
+   </div>
+   <button click.delegate="newBucket()" class ="btn btn-success">
+    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Save
+  </button>
+     <button click.delegate="deleteBucket()" class ="btn btn-danger">
+    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Delete
+  </button>
+</form>
+
+</template>

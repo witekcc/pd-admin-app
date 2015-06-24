@@ -1,17 +1,18 @@
 <template>
-
-   <form class="form-inline">
-      <div class="form-group">
-         <label>Name</label> 
-        <input type="text" value="Name"/>
-            <label>Weights</label> 
-        <input type="text" value="Weights"/>
-          <label>Values</label> 
-        <textarea rows="4" cols="50">I'm a little tea pot</textarea>
-            <button click.delegate="newBucket()" class ="btn btn-success">
-            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Save
-         </button>
+  <require from="./components/bucketEditor/view" as="editor"></require>
+  <require from="./components/bucketTypeSelector/view" as="type-selector"></require>
+  <require from="./components/bucketSelector/view" as="bucket-selector"></require>
+  <require from="./components/bucketCreateButton/view" as="bucket-create-button"></require>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <type-selector></type-selector>
+        <bucket-selector></bucket-selector>
       </div>
-   </form>
-  
+      <div class="col-md-8">
+        <bucket-create-button></bucket-create-button>
+        <editor></editor>
+      </div>
+    </div>
+  </div>
 </template>
