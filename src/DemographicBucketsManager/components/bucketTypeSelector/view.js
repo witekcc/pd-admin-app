@@ -7,11 +7,8 @@ export class BucketTypeSelector {
     this.selected= null;
     this.options= null;
   }
- 
 
- 
   optionsChanged(){
-    console.log("options");
     this.selected = this.options[0];
   }
 }

@@ -2,13 +2,17 @@
 
   <form>
     <div class="form-group">
-     <label>Bucket Type</label> 
-     <select class="form-control" multiple>
-      <option repeat.for="bucket of selectedBucket">
-        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+      <label>Buckets</label> 
+      <div class="list-group" value.bind="bucket" class="form-control">
+      <button
+        repeat.for="bucket of selectedBucket"
+        type="button"
+        class="list-group-item"
+        click.delegate="$parent.editBucket(bucket)"
+      >
         ${bucket.BucketName}
-      </option>
-    </select>  
+      </button>
+    </div>  
   </div>
 </form>
 
