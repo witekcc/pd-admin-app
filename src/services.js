@@ -19,7 +19,7 @@ export class Services{
 	}
 
 	static CampaignBuckets(){
-		return "http://10.0.1.203:7000/buckets/?type=age";
+		return "http://10.0.1.203:7000/";
 		//return "http://localhost:7000/buckets/1/";
 	}
 

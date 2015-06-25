@@ -4,8 +4,9 @@
     <div class="form-group">
      <label>Bucket Type</label> 
      <select class="form-control" multiple>
-      <option >
+      <option repeat.for="bucket of selectedBucket">
         <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+        ${bucket.BucketName}
       </option>
     </select>  
   </div>

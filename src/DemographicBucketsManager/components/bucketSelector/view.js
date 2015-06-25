@@ -1,35 +1,17 @@
-import {inject} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-http-client';
-import {Services} from '../../../services';
+import {inject, bindable, computedFrom} from 'aurelia-framework';
+import {DemographicRanking} from '../../../Models/DemographicRanking';
 
-@inject(HttpClient)
-export class LeadFileGen {
-	constructor(http) {
-		this.http = http;
-		this.campaignId = 4890;
-  		this.rowLimit = 10;
-  		//this.outputTemplate = "Id, Email, Name, Location\n{{range $row := . }}{{ $row.uuid }},{{ $row.email }},{{ $row.first_name }} {{ $row.last_name }},\"{{ $row.city }}, {{ $row.state }}, {{ $row.zipcode }}\"\n{{ end }}\n";
-  		this.results = "";
-      this.generate();
+@bindable ({  name:'selectedType', attribute:'selected-type'})
+@bindable ({  name:'buckets', attribute:'buckets'})
+export class BucketSelector {
+	constructor() {
+    this.buckets = null;
+    this.selectedType= null;
   }
 
-
-  generate() {
-  	var url = Services.CampaignBuckets();
-  	var that = this;
-
-  	this.http.get(url).then(function (httpResponse) {
-
-  		that.setResults(httpResponse.response);
-  		
-  	});
-
-  	
-  }
-
-  setResults(results){
-  	this.results = results;
-      console.log(results);
+  @computedFrom('buckets', 'selectedType')
+  get selectedBucket(){
+    return this.buckets[this.selectedType];
   }
 
 }

@@ -2,12 +2,14 @@
 
   <form>
     <div class="form-group">
-     <label>Buckets</label> 
-     <select class="form-control">
-      <option >
-        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-      </option>
-    </select>  
+     <label>Bucket Type</label> 
+       <select value.bind="selected" class="form-control">
+            <option repeat.for="option of options">
+              <span class="glyphicon glyphicon-remove-sign" aria-hidden="true">
+                ${option}
+              </span>
+            </option>
+       </select> 
   </div>
 </form>
 

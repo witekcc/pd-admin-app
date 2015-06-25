@@ -2,15 +2,13 @@
   <require from="./components/bucketEditor/view" as="editor"></require>
   <require from="./components/bucketTypeSelector/view" as="type-selector"></require>
   <require from="./components/bucketSelector/view" as="bucket-selector"></require>
-  <require from="./components/bucketCreateButton/view" as="bucket-create-button"></require>
   <div class="container">
     <div class="row">
       <div class="col-md-4">
-        <type-selector></type-selector>
-        <bucket-selector></bucket-selector>
+        <type-selector options.one-time="model.BucketTypes" selected.two-way="selected"></type-selector>
+        <bucket-selector selected-type.bind="selected" buckets.two-way="model.Buckets"></bucket-selector>
       </div>
       <div class="col-md-8">
-        <bucket-create-button></bucket-create-button>
         <editor></editor>
       </div>
     </div>

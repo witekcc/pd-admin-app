@@ -1,16 +1,16 @@
-import {inject} from 'aurelia-framework';
+import {inject, bindable} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
 import {Services} from '../services';
+import {DemographicRanking} from '../../../Models/DemographicRanking';
 
-@inject(HttpClient)
+@bindable ({name:'selected', attribute:'selected-type'})
+@inject(HttpClient, DemographicRanking)
 export class LeadFileGen {
-	constructor(http) {
+	constructor(http, model) {
 		this.http = http;
 		this.campaignId = 4890;
-  		this.rowLimit = 10;
-  		//this.outputTemplate = "Id, Email, Name, Location\n{{range $row := . }}{{ $row.uuid }},{{ $row.email }},{{ $row.first_name }} {{ $row.last_name }},\"{{ $row.city }}, {{ $row.state }}, {{ $row.zipcode }}\"\n{{ end }}\n";
-  		this.results = "";
-  
+    this.rowLimit = 10;
+  	this.results = "";
+    this.model = model;
   }
-
 }
