@@ -8,6 +8,8 @@ export class LeadFileGen {
 	constructor(model) {
     this.model = model;
     this.EditState = false;
+    this.AlertState = false;
+
     this.message = {msg:"hello", level:"info"}; //success, info, warning, danger
   }
 
@@ -31,6 +33,7 @@ export class LeadFileGen {
       } else {
         this.message = {msg:`Aurelia sucks`, level:"warning"};
       }
+      this.AlertState = true;
     })
       
   }

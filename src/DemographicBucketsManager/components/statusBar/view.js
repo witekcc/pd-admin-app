@@ -5,4 +5,11 @@ export class BucketValuesEditor {
   constructor() {
     this.message = null;
   }
+
+  hide(){
+    this.$parent.AlertState = false;
+  }
+  bind(bindingContext) {
+    this.$parent = bindingContext;
+  }
 }
