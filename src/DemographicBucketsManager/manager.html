@@ -4,16 +4,35 @@
   <require from="./components/bucketSelector/view" as="bucket-selector"></require>
   <div class="container">
     <div class="row">
+      <div class="col-md-12">
+        <div class="page-header jumbotron text-center">
+          <h2>
+            Demographic Ranking <br />
+            <small>Bucket Management</small>
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-4">
-        <type-selector options.one-time="model.BucketTypes" selected.two-way="selected"></type-selector>
-        <bucket-selector
-          selected-type.bind="selected"
-          buckets.two-way="model.Buckets"
-          selected-bucket.two-way="selectedBucket"
-        ></bucket-selector>
+        <div class="panel panel-primary">
+          <div class="panel-heading">Bucket Selection</div>
+          <div class="panel-body">
+            <type-selector options.one-time="model.BucketTypes" selected.two-way="selected"></type-selector>
+            <bucket-selector
+              selected-type.bind="selected"
+              buckets.two-way="model.Buckets"
+              selected-bucket.two-way="selectedBucket"
+            ></bucket-selector>
+          </div>
+        </div>
       </div>
       <div class="col-md-8">
-        <editor bucket.bind="selectedBucket"></editor>
+        <div class="panel panel-primary">
+          <div class="panel-heading">Bucket Editor</div>
+            <editor bucket.bind="selectedBucket"></editor>
+          </div>
+        </div>
       </div>
     </div>
   </div>
