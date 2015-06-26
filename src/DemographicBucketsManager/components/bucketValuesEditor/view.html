@@ -1,0 +1,19 @@
+<template>
+    <div class="form-group">
+      <label>Values</label>
+      <button click.delegate="AddVal()" class ="btn btn-success">
+      <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+    </button>
+      <ul>
+        <li repeat.for="val of bucket.Bucket" class="input-group">
+          <input type="text"  class="form-control" value="${val}" keyup.delegate(console.log("this sucks"))/>
+          <span class="input-group-btn">
+            <button click.delegate="$parent.DeleteVal($index)" class ="btn btn-danger">
+              <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+            </button>
+          </span>
+        </li>
+      </ul>
+      <!-- <textarea rows="4" cols="50" class="form-control" value.bind="bucket.Bucket"></textarea> -->
+    </div>
+</template>

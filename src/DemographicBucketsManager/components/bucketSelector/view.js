@@ -12,6 +12,11 @@ export class BucketSelector {
 
   editBucket(bucket){
     this.bucket = bucket;
+    this.$parent.EditState = true;
+  }
+
+      bind(bindingContext) {
+    this.$parent = bindingContext;
   }
 
   @computedFrom('buckets', 'selectedType')

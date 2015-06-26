@@ -43,7 +43,6 @@ export class DemographicRanking {
         if (httpResponse.isSuccess){
           this.Buckets[bucketType] = JSON.parse(httpResponse.response);
         }
-        console.log("Loaded");
 		})
     .catch(e => {
       //TODO do something with errors
@@ -82,15 +81,17 @@ export class DemographicRanking {
   }
 
 
-    DeleteBucket(bucketID) {
+    DeleteBucket(bucketID, cb) {
     this.client.delete(`/buckets/${bucketID}/`)
       .then(httpResponse => {
+        
         if (httpResponse.isSuccess){
           console.log("Delete");
-
         }
+        cb(bucketID, httpResponse.isSuccess, null)
     })
     .catch(e => {
+      cb(null, null, e)
       //TODO do something with errors
       console.dir(e);
     });

@@ -7,6 +7,8 @@ import {DemographicRanking} from '../../../Models/DemographicRanking';
 export class LeadFileGen {
 	constructor(model) {
     this.model = model;
+    this.EditState = false;
+    this.message = {msg:"hello", level:"info"}; //success, info, warning, danger
   }
 
   SaveBucket(bucket){
@@ -21,6 +23,20 @@ export class LeadFileGen {
   }
 
   DeleteBucket(id){
-    this.model.DeleteBucket(id)
+    this.model.DeleteBucket(id, (id, success, error) => {
+        if (!error && success) {
+        this.EditState = false;
+        this.selectedBucket = {}
+        this.message = {msg:`Successfully deleted {id}`, level:"success"};
+      } else {
+        this.message = {msg:`Aurelia sucks`, level:"warning"};
+      }
+    })
+      
+  }
+
+  NewBucket (){
+    this.selectedBucket = {}
+    this.EditState = true;
   }
 }

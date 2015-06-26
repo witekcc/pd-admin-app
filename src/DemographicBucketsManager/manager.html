@@ -2,6 +2,7 @@
   <require from="./components/bucketEditor/view" as="editor"></require>
   <require from="./components/bucketTypeSelector/view" as="type-selector"></require>
   <require from="./components/bucketSelector/view" as="bucket-selector"></require>
+    <require from="./components/statusBar/view" as="status"></require>
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -11,13 +12,18 @@
             <small>Bucket Management</small>
           </h2>
         </div>
+        <status message.bind="message"></status>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4">
+        <button click.delegate="NewBucket()" class ="btn btn-default">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Bucket
+        </button>
         <div class="panel panel-primary">
           <div class="panel-heading">Bucket Selection</div>
           <div class="panel-body">
+
             <type-selector options.one-time="model.BucketTypes" selected.two-way="selected"></type-selector>
             <bucket-selector
               selected-type.bind="selected"
@@ -28,7 +34,7 @@
         </div>
       </div>
       <div class="col-md-8">
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" show.bind="EditState">
           <div class="panel-heading">Bucket Editor</div>
             <editor bucket.bind="selectedBucket"></editor>
           </div>

@@ -1,9 +1,7 @@
 <template>
 <require from="../bucketTypeSelector/view" as="type-selector"></require>
+<require from="../bucketValuesEditor/view" as="values"></require>
   <form>
-    <button click.delegate="Clear()" class ="btn btn-default">
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Bucket
-    </button>
     <div class="form-group">
       <label>Name</label> 
       <input type="text" class="form-control" value="${bucket.BucketName}"/>
@@ -15,23 +13,7 @@
     <div class="form-group">
       <type-selector options.one-time="$parent.model.BucketTypes" selected.two-way="bucket.DemographicType"></type-selector>
     </div>
-    <div class="form-group">
-      <label>Values</label>
-      <button click.delegate="AddVal()" class ="btn btn-success">
-      <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-    </button>
-      <ul>
-        <li repeat.for="val of bucket.Bucket" class="input-group">
-          <input type="text"  class="form-control" value="${val}"/>
-          <span class="input-group-btn">
-            <button click.delegate="$parent.DeleteVal($index)" class ="btn btn-danger">
-              <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
-            </button> 
-          </span>
-        </li>
-      </ul>
-      <!-- <textarea rows="4" cols="50" class="form-control" value.bind="bucket.Bucket"></textarea> -->
-    </div>
+    <values bucket.two-way="bucket"></values>
     <button click.delegate="$parent.SaveBucket(bucket)" class ="btn btn-success">
       <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Save
     </button>
