@@ -1,6 +1,6 @@
 <template>
   <form>
-    <button click.delegate="createBucket()" class ="btn btn-default">
+    <button click.delegate="Clear()" class ="btn btn-default">
       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Bucket
     </button>
     <div class="form-group">
@@ -15,10 +15,10 @@
       <label>Values</label> 
       <textarea rows="4" cols="50" class="form-control" value.bind="bucket.Bucket"></textarea>
     </div>
-    <button click.delegate="newBucket()" class ="btn btn-success">
+    <button click.delegate="$parent.SaveBucket(bucket)" class ="btn btn-success">
       <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Save
     </button>
-    <button click.delegate="deleteBucket()" class ="btn btn-danger">
+    <button click.delegate="$parent.DeleteBucket(bucket.ID)" class ="btn btn-danger">
       <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Delete
     </button>
   </form>

@@ -6,9 +6,11 @@ import {Services} from 'services';
 export class DemographicRanking {
 	constructor(http){
     this.client = new HttpClient()
-      .configure(x => x.withBaseUrl(
-          Services.CampaignBuckets()
-      ));
+      .configure(x =>{
+            //x.withHeader('Content-Type', 'application/json');
+            x.withBaseUrl(Services.CampaignBuckets())
+      });
+
       this.BucketTypes = [
         'age',
         'gender',
@@ -48,4 +50,47 @@ export class DemographicRanking {
       console.dir(e);
     });
 	}
+
+    UpdateBucket(bucket) {
+    this.client.put(`/buckets/${bucket.ID}/`, bucket)
+      .then(httpResponse => {
+        if (httpResponse.isSuccess){
+          console.log("Updated");
+        }
+        
+    })
+    .catch(e => {
+      //TODO do something with errors
+      console.dir(e);
+    });
+  }
+
+  CreateBucket(newBucket) {
+    this.client.post(`/buckets/`, newBucket)
+      .then(httpResponse => {
+        if (httpResponse.isSuccess){
+          console.log("Created");
+        }
+        
+    })
+    .catch(e => {
+      //TODO do something with errors
+      console.dir(e);
+    });
+  }
+
+
+    DeleteBucket(bucketID) {
+    this.client.delete(`/buckets/${bucketID}/`)
+      .then(httpResponse => {
+        if (httpResponse.isSuccess){
+          console.log("Delete");
+
+        }
+    })
+    .catch(e => {
+      //TODO do something with errors
+      console.dir(e);
+    });
+  }
 }
