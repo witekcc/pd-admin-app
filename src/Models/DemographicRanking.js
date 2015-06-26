@@ -52,6 +52,7 @@ export class DemographicRanking {
 	}
 
     UpdateBucket(bucket) {
+    console.dir(bucket)
     this.client.put(`/buckets/${bucket.ID}/`, bucket)
       .then(httpResponse => {
         if (httpResponse.isSuccess){
@@ -66,6 +67,7 @@ export class DemographicRanking {
   }
 
   CreateBucket(newBucket) {
+    console.dir(newBucket)
     this.client.post(`/buckets/`, newBucket)
       .then(httpResponse => {
         if (httpResponse.isSuccess){
