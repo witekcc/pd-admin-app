@@ -1,45 +1,62 @@
-import {inject, bindable} from 'aurelia-framework';
+import {inject} from 'aurelia-framework';
 import {DemographicRanking} from '../../../Models/DemographicRanking';
 
-@bindable ({name:'selected', attribute:'selected-type'})
-@bindable ({name:'selectedBucket', attribute:'selected-bucket'})
 @inject(DemographicRanking)
-export class LeadFileGen {
+export class BucketManager {
 	constructor(model) {
     this.model = model;
     this.EditState = false;
     this.AlertState = false;
 
-    this.message = {msg:"hello", level:"info"}; //success, info, warning, danger
+    this.message = {
+      msg:null,
+      level:null, //success, info, warning, danger
+    };
+    
+    this.clearSelected();
+    
+    this.updateStatus = (id, success, error) => {
+      if (!error && success) {
+        this.EditState = false;
+        this.selectedBucket = {};
+        this.message = {msg:`Success ${id}`, level:"success"};
+      } else {
+        console.dir(error);
+        this.message = {msg:`Error: ${error.statusText}`, level:"danger"};
+      }
+      this.AlertState = true;
+    };
+  }
+
+  clearSelected(){
+    this.selectedBucket = {
+      weight: null,
+      name: null,
+      type: null,
+      bucket: [null]
+    };
   }
 
   SaveBucket(bucket){
-    if (bucket.ID) {
-      this.model.UpdateBucket(bucket)
-
+    if (bucket.id) {
+      this.model.UpdateBucket(bucket, this.updateStatus);
     } else {
-      this.model.CreateBucket(bucket)
-
+      this.model.CreateBucket(bucket, this.updateStatus);
     }
-
   }
 
   DeleteBucket(id){
-    this.model.DeleteBucket(id, (id, success, error) => {
-        if (!error && success) {
-        this.EditState = false;
-        this.selectedBucket = {}
-        this.message = {msg:`Successfully deleted {id}`, level:"success"};
-      } else {
-        this.message = {msg:`Aurelia sucks`, level:"warning"};
-      }
-      this.AlertState = true;
-    })
-      
+    this.clearSelected();
+    this.model.DeleteBucket(id, this.updateStatus);
   }
 
   NewBucket (){
-    this.selectedBucket = {}
+    this.clearSelected();
     this.EditState = true;
+  }
+
+  CancelEdit() {
+    this.clearSelected();
+    this.EditState = false;
   }
 }

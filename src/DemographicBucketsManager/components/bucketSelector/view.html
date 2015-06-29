@@ -1,19 +1,15 @@
 <template>
-
-  <form>
     <div class="form-group">
       <label>Buckets</label> 
-      <div class="list-group" value.bind="bucket" class="form-control">
-      <button
-        repeat.for="bucket of selectedBucket"
-        type="button"
-        class="list-group-item"
-        click.delegate="$parent.editBucket(bucket)"
-      >
-        ${bucket.BucketName}
+      <div class="list-group" class="form-control">
+        <button
+          repeat.for="bucket of buckets"
+          type="button"
+          class="list-group-item"
+          click.delegate="$parent.editBucket(bucket)"
+        >
+          ${bucket.name}
       </button>
     </div>  
   </div>
-</form>
-
 </template>

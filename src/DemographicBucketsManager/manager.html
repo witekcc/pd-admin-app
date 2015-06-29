@@ -23,20 +23,21 @@
         <div class="panel panel-primary">
           <div class="panel-heading">Bucket Selection</div>
           <div class="panel-body">
-
-            <type-selector options.one-time="model.BucketTypes" selected.two-way="selected"></type-selector>
+            <type-selector
+              options.one-time="model.BucketTypes"
+              selected.two-way="selected"
+            ></type-selector>
             <bucket-selector
-              selected-type.bind="selected"
-              buckets.two-way="model.Buckets"
-              selected-bucket.two-way="selectedBucket"
+              buckets.two-way="model.Buckets[selected]"
+              bucket.two-way="selectedBucket"
             ></bucket-selector>
           </div>
         </div>
       </div>
       <div class="col-md-8">
-        <div class="panel panel-primary" show.bind="EditState">
+        <div class="panel panel-primary" if.bind="EditState">
           <div class="panel-heading">Bucket Editor</div>
-            <editor bucket.bind="selectedBucket"></editor>
+            <editor bucket.two-way="selectedBucket"></editor>
           </div>
         </div>
       </div>

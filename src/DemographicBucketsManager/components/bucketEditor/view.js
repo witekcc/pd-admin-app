@@ -1,11 +1,9 @@
-import {inject, bindable} from 'aurelia-framework';
+import {bindable} from 'aurelia-framework';
 
-@bindable ({  name:'bucket', attribute:'bucket'})
 export class BucketEditor {
-  constructor(http) {
-  }
+  @bindable bucket;
 
-    bind(bindingContext) {
+  bind(bindingContext) {
     this.$parent = bindingContext;
   }
 }

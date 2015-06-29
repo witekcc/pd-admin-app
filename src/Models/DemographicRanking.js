@@ -7,8 +7,8 @@ export class DemographicRanking {
 	constructor(http){
     this.client = new HttpClient()
       .configure(x =>{
-            //x.withHeader('Content-Type', 'application/json');
-            x.withBaseUrl(Services.CampaignBuckets())
+            x.withBaseUrl(Services.CampaignBuckets());
+            x.withHeader('Content-Type', 'application/json');
       });
 
       this.BucketTypes = [
@@ -27,10 +27,6 @@ export class DemographicRanking {
       this.Reload();
 	}
 
-  get foo(){
-    console.log("getting it");
-  }
-
   Reload(){
     for (var i = this.BucketTypes.length - 1; i >= 0; i--) {
       this.GetBuckets(this.BucketTypes[i]);
@@ -41,7 +37,16 @@ export class DemographicRanking {
 		this.client.get(`/buckets/?type=${bucketType}`)
       .then(httpResponse => {
         if (httpResponse.isSuccess){
-          this.Buckets[bucketType] = JSON.parse(httpResponse.response);
+          let buckets = JSON.parse(httpResponse.response);
+          this.Buckets[bucketType] = buckets.map(bucket => {
+            return {
+              name: bucket.BucketName,
+              type: bucket.DemographicType,
+              bucket: bucket.Bucket,
+              weight: bucket.BucketWeight,
+              id: bucket.ID,
+            };
+          });
         }
 		})
     .catch(e => {
@@ -50,53 +55,38 @@ export class DemographicRanking {
     });
 	}
 
-    UpdateBucket(bucket) {
-    console.dir(bucket)
-    let id = bucket.ID;
-    delete bucket.ID
-    this.client.put(`/buckets/${id}/`, bucket)
+  UpdateBucket(bucket, fn) {
+    console.dir(bucket);
+    this.client.put(`/buckets/${bucket.id}/`, bucket)
       .then(httpResponse => {
-        if (httpResponse.isSuccess){
-          console.log("Updated");
-        }
-        
+        this.Reload();
+        fn(bucket.id, httpResponse.isSuccess, null);
     })
     .catch(e => {
-      //TODO do something with errors
-      console.dir(e);
+      fn(null, null, e);
     });
   }
 
-  CreateBucket(newBucket) {
-    console.dir(newBucket)
-    delete bucket.ID
+  CreateBucket(newBucket, fn) {
     this.client.post(`/buckets/`, newBucket)
       .then(httpResponse => {
-        if (httpResponse.isSuccess){
-          console.log("Created");
-        }
-        
+        this.Reload();
+        fn('bucketID', httpResponse.isSuccess, null);
     })
     .catch(e => {
-      //TODO do something with errors
-      console.dir(e);
+      fn(null, null, e);
     });
   }
 
 
-    DeleteBucket(bucketID, cb) {
+  DeleteBucket(bucketID, fn) {
     this.client.delete(`/buckets/${bucketID}/`)
       .then(httpResponse => {
-        
-        if (httpResponse.isSuccess){
-          console.log("Delete");
-        }
-        cb(bucketID, httpResponse.isSuccess, null)
+        this.Reload();
+        fn(bucketID, httpResponse.isSuccess, null);
     })
     .catch(e => {
-      cb(null, null, e)
-      //TODO do something with errors
-      console.dir(e);
+      fn(null, null, e);
     });
   }
 }

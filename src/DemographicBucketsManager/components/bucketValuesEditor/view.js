@@ -1,25 +1,33 @@
-import {inject, bindable} from 'aurelia-framework';
+import {bindable, syncChildren} from 'aurelia-framework';
 
-@bindable ({  name:'bucket', attribute:'bucket'})
+@syncChildren("lis", "lisChanged", "li")
 export class BucketValuesEditor {
-  constructor(http) {
+  @bindable bucket;
+
+  constructor() {
+    this.bucket = null;
   }
 
-  AddVal(){
-    if (this.bucket && this.bucket.Bucket) {
-        this.bucket.Bucket.push('')
+  AddVal(index){
+    if (this.bucket) {
+      this.bucket.splice(index + 1, 0, null);
     }
   }
 
-   DeleteVal(val){
-    if (this.bucket && this.bucket.Bucket) {
-
-      this.bucket.Bucket = this.bucket.Bucket.filter(function(element, index, array) {
-          if (index !== val){
-           return true
-          }
-        })
-      console.log("MYDEBUG", this.bucket.Bucket)
+  lisChanged() {
+    if (this.lis.length !== this.bucket.length){
+      this.bucket = this.bucket.filter(e => {
+        return (e !== 'undefined');
+      });
+      console.log("lis changed! Count: " + this.lis.length);
+     }
+  }
+   DeleteVal(index){
+    if (this.bucket) {
+      this.bucket.splice(index, 1);
+      if (this.bucket.length === 0){
+        this.bucket = [null];
+      }
     }
   }
 }
