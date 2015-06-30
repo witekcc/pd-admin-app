@@ -35,10 +35,15 @@
         </div>
       </div>
       <div class="col-md-8">
+        <div class="well well-lg" if.bind="!EditState">
+          <p class="text-center">
+            Select a bucket from the "Bucket Selection" to edit or click
+            "New Bucket" to create a new one.
+          </p>
+        </div>
         <div class="panel panel-primary" if.bind="EditState">
           <div class="panel-heading">Bucket Editor</div>
-            <editor bucket.two-way="selectedBucket"></editor>
-          </div>
+          <editor bucket.one-way="selectedBucket"></editor>
         </div>
       </div>
     </div>

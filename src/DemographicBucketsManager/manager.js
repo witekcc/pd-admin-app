@@ -21,7 +21,6 @@ export class BucketManager {
         this.selectedBucket = {};
         this.message = {msg:`Success ${id}`, level:"success"};
       } else {
-        console.dir(error);
         this.message = {msg:`Error: ${error.statusText}`, level:"danger"};
       }
       this.AlertState = true;
