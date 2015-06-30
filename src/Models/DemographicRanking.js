@@ -18,17 +18,13 @@ export class DemographicRanking {
         'region'
       ] ;
 
-      this.Buckets={};
-
-      for (var i = this.BucketTypes.length - 1; i >= 0; i--) {
-        this.Buckets[this.BucketTypes[i]] = [];
-      }
-
       this.Reload();
 	}
 
   Reload(){
+    this.Buckets={};
     for (var i = this.BucketTypes.length - 1; i >= 0; i--) {
+      this.Buckets[this.BucketTypes[i]] = [];
       this.GetBuckets(this.BucketTypes[i]);
     }
  }

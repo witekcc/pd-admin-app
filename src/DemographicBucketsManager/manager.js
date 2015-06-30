@@ -56,6 +56,7 @@ export class BucketManager {
 
   CancelEdit() {
     this.clearSelected();
+    this.model.Reload();
     this.EditState = false;
   }
 }
