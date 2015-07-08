@@ -8,6 +8,7 @@ export class LeadTransferConfiguration {
 
 	constructor(http, obj){
 		this.http = http;
+		this.CampaignToConfigId = 0;
 		this.Name = "New Configuration";
 		this.Url = "";
 		this.DynamicPart ="";
@@ -58,7 +59,9 @@ export class LeadTransferConfiguration {
 		.withContent(JSON.stringify(this, this.replacer))
 		.send().then(function (httpResponse){
 		
-			that.Id = parseInt(httpResponse.response);
+			let item = JSON.parse(httpResponse.response);
+			that.Id = item.Id;
+			that.CampaignToConfigId = item.CampaignToConfigId;
 
 			that.isSaving = false;
 		});

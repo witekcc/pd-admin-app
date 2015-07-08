@@ -38,7 +38,7 @@ export class IdKeyValueCollection {
 		if(this.selectedItem == null)
 			return;
 
-		let url = Services.LeadConfig() + this.parent.Id + this.urlPart;
+		let url = Services.LeadConfig() + this.parent.CampaignToConfigId + this.urlPart;
 		let item = this.selectedItem;
 
 		this.http.createRequest(url)
@@ -56,7 +56,7 @@ export class IdKeyValueCollection {
 		if(this.selectedItem == null)
 			return;
 
-		let url = Services.LeadConfig() + this.parent.Id + this.urlPart;
+		let url = Services.LeadConfig() + this.parent.CampaignToConfigId + this.urlPart;
 		let item = this.selectedItem;
 		
 		this.selectedItem = null;
