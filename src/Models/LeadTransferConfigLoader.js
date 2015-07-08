@@ -22,6 +22,7 @@ export class LeadTransferConfigLoader {
 
 			for(let item in items) {				
 				campaignArray.push(new LeadTransferConfiguration(that.http, items[item]));
+				console.log(items[item]);
 			 }
 
 			 that.decrementLoading();
