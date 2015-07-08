@@ -10,7 +10,8 @@ export class App {
     config.title = 'PD Administration Application';
     config.addPipelineStep('authorize', AuthorizeStep); 
     config.map([
-        { route: ['','configuration'], moduleId: './LeadGen/configuration', nav:true, title:'Lead File Management', auth: false}
+        { route: ['','configuration'], moduleId: './LeadGen/configuration', nav:true, title:'Lead File Management', auth: false},
+        { route: ['bucketmanager'], moduleId: './DemographicBucketsManager/manager', nav:true, title:'Demographic Bucket Management'}
     ]);
 
     this.router = router;

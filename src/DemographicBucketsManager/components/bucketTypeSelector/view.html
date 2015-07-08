@@ -1,0 +1,10 @@
+<template>
+  <div class="form-group">
+    <label>Bucket Type</label> 
+      <select value.bind="selected" class="form-control">
+        <option repeat.for="option of options">
+          ${option}
+        </option>
+      </select> 
+  </div>
+</template>

@@ -1,0 +1,40 @@
+<template>
+    <div class="form-group">
+      <label>Values</label>
+      <ul class="list-group">
+        <li
+          repeat.for="val of bucketCopy"
+          class="list-group-item"
+        >
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              value.two-way="$parent.bucket[$index]"
+            />
+            <span class="input-group-btn">
+              <button
+                click.delegate="$parent.AddVal($index)"
+                class="btn btn-success"
+              >
+                <span
+                  class="glyphicon glyphicon-plus-sign"
+                  aria-hidden="true"
+                ></span>
+              </button>
+              <button
+                click.delegate="$parent.DeleteVal($index)"
+                class="btn btn-danger"
+              >
+                <span
+                  class="glyphicon glyphicon-minus-sign"
+                  aria-hidden="true"
+                ></span>
+              </button>
+            </span>
+          </div>
+        </li>
+      </ul>
+      <span class="input-group-btn"></span>
+    </div>
+</template>

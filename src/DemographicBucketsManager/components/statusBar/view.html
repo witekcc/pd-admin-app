@@ -1,0 +1,8 @@
+<template>
+  <div class="alert alert-${message.level} alert-dismissible" role="alert">
+    <button type="button" class="close" click.delegate="hide()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    ${message.msg}
+  </div>
+</template>
